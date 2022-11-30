@@ -1,9 +1,20 @@
 website
+build an host a web server
+"client wants to run their own web server to monitor the stats of their server, docker container"
+PROBLEMS: not being able to see resource usage from the container, secure login to the website, setting up a self signed certificate and htt---------------------------------------ps
+STAKEHOLDERS:
 
 login database
+securely store and hash users passwords in the style of /etc/shadow
+"a client needs to securely store employee and customer login details with an account creation interface and SQL backend including SQL injection resistance and salting of passwords with strong encryption"
+PROBLEMS: sql injection resistance, hashing and salt implementation, secure storage of user information
+STAKEHOLDERS:
+
 
 port scanner
 -give it an ip addres and it scans the top 1000 ports or specific ports 
+
+
 
 game
 -could use a minimax algorithm
@@ -17,7 +28,11 @@ game
 -profiles on players to help predict their next move and change affinity value on squares
 -alpha beta pruning to cut down on computation
 
+
+
 game server
+
+
 
 password cracker
 -tool that takes an unsalted hash of a password, password length and the algorithm used to encrypt it
@@ -25,10 +40,18 @@ password cracker
 -option to select a different wordlist
 -GPU acceleration
 
+
+
 physics simulation
+
+
 
 audit tool
 
+
+
 encryption tool
+
+
 
 ssh application
