@@ -33,17 +33,13 @@ game
 
 
 
+
 game server
 Fully program a containerised game server that scales with game load
 "a client wants to host a server for their game, it needs to be able to support several players simultaneously and automatically change scale to load balance eg containerised app"
 PROBLEMS:finding or building a simple game to test with eg multiplayer or single player, load balancing, user simulation for testing, resource monitoring
 
 
-password cracker
-input an unsalted hash and run it against rainbow tables and rockyou.txt returning the correct password
-multicore utilisation for GPU
-time estimate upper bound not maximum time
-"a client wants to test the strengths of their users passwords by running them
 
 
 
@@ -54,9 +50,20 @@ physics simulation
 audit tool
 
 
+GAME alt
+-A fast paced, roguelike, 2d platformer shooter with a similar style and concepts to superfighters, my firend pedro, ultrakill, celeste or other games of that genre
+-retro sounding 8-bit style of music or a more futurey, synth style of sound design, like cyberpunk 
+-movement tech
+-fluidity
+-simplicity of the interface, the camera will exist as a square on a larger simulated area, the whole area will be simulated at the same time 
+but will allow player tracking and zoom functions for the player, the camera region will fit the size of the window and can be achieved by first 
+rendering the whole level and then drawing the camera borders on screen and hiding the rest from the user by zooming to the boarderless camera region
+-bullets and weapons should be simple sprites that have sufficient collision properties and can interract with weapons or other objects in the game for e.g. blocking/cover damage
+-NPC's should be able to accurately target the player and take cover, behind objects. NPC's should also use some of the same movement tech and gadgets as 
+the payer depending on their difficulty or enemy type, with characters throwing grenades, using shields to block, and hiding from the players current attack by dodging or blocking.
+-enemy types
+-cover
+-Environmental objects. The levl should have several interactable objects that the player (or NPCs) can utilise, like glass, falling objects, exploding barrels and doors
+-music should fit the current chaos of the onging battle, with it ramping up as combat intensifies while stil being a good fit for the current action 
+like doom, ultrakill or cuberpunk2077
 
-encryption tool
-
-
-
-ssh application
