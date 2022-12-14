@@ -44,7 +44,8 @@ PROBLEMS:finding or building a simple game to test with eg multiplayer or single
 
 
 physics simulation
-
+-A simple window that uses colours and ascii characters to represent objects
+users could interact with objects using the mause while the simulation is running
 
 
 audit tool
