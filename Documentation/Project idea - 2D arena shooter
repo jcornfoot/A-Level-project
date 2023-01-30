@@ -69,3 +69,15 @@
 ----when players are hit by a shotgun (or other weapon with a decent punch) from a short range their character will ragdoll and be thrown backwards a short distance, if hit repeatedly while in this state they will continue their movement backwards untill they fall through a window or collide with a solid object
 ----players are not stunned after the initial animation assuming the enemy has stopped shooting
 ---stagger
+
+
+==Adding Complexity==
+To be sufficiently complex for an a-level project, there will need to be additional functionality rather than building upon the same idea
+One possible route to take would be to incorporate a multi player system capable of handling >2 players.
+This system would have to run on a dedicated server alongside the current game, if the player is hosting and joining from the same machine
+The game would have to run on the server and all actions would have to be authorised to prevent cheating and ensure that all games play out correctly
+As this is only running over LAN latency should not be an issue and all players will need is a server ip address, password(optional) and a port number
+
+Another route to take is to implement a sifficiently advanced NPC algorithm for players to fight with or against
+
+Additionally adding powerups or items that change the physics of the game mid-play are great at adding complexity to a project
