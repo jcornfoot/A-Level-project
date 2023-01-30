@@ -1,0 +1,71 @@
+2D platformer arena shooter
+-small/medium sized maps 
+
+-camera that smoothly encorporates all players on the screen simultaniously
+--The movement needs to be smooth and should avoid jumping the view in and out as much as possible
+--Screen size should be determined by a 'size' variable
+---when 'size' reaches a certain point, expand the view to the full area of the map
+--when tow players are close enough together, shrink the camera and track the two players within the boundaries
+--on smaller maps most of the map should be visible anyway so there should be very little camera movement as all most of the map will be on screen anyway 
+--the camera should move to a comfortable size when the last two players are close enough together for end of round one on ones
+
+-keyboard + mouse controls 
+--keyboard for movement and abilities and mouse for aiming and blocking/alternate actions
+
+-special abilities
+--bullet time
+---time should slow for all players 
+---time should slow for all physics objects
+---sounds should distort
+---bullets should gain a trail/shockwave effect
+---screen apearance should change
+--TODO
+
+-Weapons
+--TODO
+
+-Maps
+--each map should be split up into layers with different physical and visible characteristics
+--platforms should be used as the players primary method of moving between floors
+--environmental objects
+---explosive barrels 
+---flammable materials
+---falling objects/crush hazards
+---death pits/acid/lava
+---small breakable objects e.g. wooden crates, tables and chairs
+---non-breakable objects e.g. barrels, filing cabinets and other furniture
+---interractable map objects e.g. hanging crates that can be shot down, glass windows and skylights, buttons and ceiling lights
+
+-standards
+--units
+---maps will be made out of a grid
+---the length of each unit in the grid will be important for runnng/falling speed
+--player movement speed and jump height
+---movement speed should be in X units/s for all unbuffed players
+---jump height should be x units and will influence map and object design greatly for smooth game play 
+--map size
+
+-movement
+--players need fluid movement to traverse the arena smoothly during combat
+--maps need to be designed around the exisiting universal moveset of players and NPCs
+--basic movement:
+---walking
+---running
+---crouching
+---jumping
+--movement combos:
+---dive/dodge
+---roll
+--traversal:
+---jumping through platforms
+---falling through platforms
+---jumping down platforms
+--ragdolls:
+---when certain criteria are met players will loose all control of their character while an animation plays out
+---falling
+-----when falling from a sufficient distance, the character will ragdoll untill they hit a solid object where they will damage anything they come into contact with, recieving damage in the process
+----Players will be stunned for a short duration after this
+---shotgun
+----when players are hit by a shotgun (or other weapon with a decent punch) from a short range their character will ragdoll and be thrown backwards a short distance, if hit repeatedly while in this state they will continue their movement backwards untill they fall through a window or collide with a solid object
+----players are not stunned after the initial animation assuming the enemy has stopped shooting
+---stagger
