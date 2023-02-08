@@ -81,3 +81,12 @@ As this is only running over LAN latency should not be an issue and all players 
 Another route to take is to implement a sifficiently advanced NPC algorithm for players to fight with or against
 
 Additionally adding powerups or items that change the physics of the game mid-play are great at adding complexity to a project
+
+
+player characters should be selected and are heroes with a special ability, the option to pick an unspecialised hero should also be availiable e.g. R6 recruit
+
+each hero should have an ability set and spawn with specific items and secondary abilities to better fit with their loadout e.g. grenades, knives, 
+
+hero ability ideass:
+slow motion
+movement tech - grappling hook, double jump, slide
