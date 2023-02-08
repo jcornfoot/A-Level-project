@@ -1,9 +1,12 @@
 game
 ====
-## Menu/interfaces
+## Menus
 
 ### Start menu
 #### Play
+##### Singleplayer
+##### Multiplayer
+###### WIP
 ##### Level preview
 #### Settings
 ##### Volume
@@ -43,6 +46,7 @@ game
 ### Secondary
 ### Melee
 
+
 ## NPCs
 ### Skins
 ### Heroes
@@ -54,9 +58,16 @@ game
 ## Abilities
 ### Bullet time
 #### slow time
-### Bullet trails
+#### Bullet trails
+### 
 
-##
+## GUI
+### Style switch
+### Design
+### Health counter
+### Ammo counter
+### Items
+### Ability
 
 features list
 -------------
@@ -76,4 +87,10 @@ features list
 * character abilities
 * bullet time
 * user setting persistance 
+* tertiary/secondary ability slot
+* grenades/throwables
+* interraction between different hero abilities and certain items in regular gameplay
+* weapon ammo and reloading animations
+* special weapons
+* restrictions for heroes
 * 
