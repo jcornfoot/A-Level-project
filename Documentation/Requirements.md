@@ -93,4 +93,3 @@ features list
 * weapon ammo and reloading animations
 * special weapons
 * restrictions for heroes
-* 
