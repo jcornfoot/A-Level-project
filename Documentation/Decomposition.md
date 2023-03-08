@@ -160,6 +160,8 @@
 -Each character in a level has a stamina bar that determines the amount they can run, roll or shoot while moving, recharge after a delay
 ## Character abilities
 ## Light and heavy weapons
+## Stun/stagger/I-frames
+##Knockback
 
 
 
