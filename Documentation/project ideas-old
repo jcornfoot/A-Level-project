@@ -1,0 +1,70 @@
+website
+build an host a web server
+"client wants to run their own web server to monitor the stats of their server, docker container"
+PROBLEMS: not being able to see resource usage from the container, secure login to the website, setting up a self signed certificate and htt---------------------------------------ps
+STAKEHOLDERS:
+
+login database
+securely store and hash users passwords in the style of /etc/shadow
+"a client needs to securely store employee and customer login details with an account creation interface and SQL backend including SQL injection resistance and salting of passwords with strong encryption"
+PROBLEMS: sql injection resistance, hashing and salt implementation, secure storage of user information
+STAKEHOLDERS:
+
+
+port scanner
+-give it an ip addres and it scans the top 1000 ports or specific ports 
+run i on a local ip and search simply for open ports and services
+"A client wants to test the machines on their network to look for open and vulnerable services to secure"
+PROBLEMS: accessing the network, correctly scanning and identifying ports 
+
+
+
+game
+-could use a minimax algorithm
+-rogue like 
+-2D top down base defence game
+-turnbased 
+-leaderboard
+--login system
+--retained scores
+--account creation and deletion
+-profiles on players to help predict their next move and change affinity value on squares
+-alpha beta pruning to cut down on computation
+
+
+
+
+game server
+Fully program a containerised game server that scales with game load
+"a client wants to host a server for their game, it needs to be able to support several players simultaneously and automatically change scale to load balance eg containerised app"
+PROBLEMS:finding or building a simple game to test with eg multiplayer or single player, load balancing, user simulation for testing, resource monitoring
+
+
+
+
+
+physics simulation
+-A simple window that uses colours and ascii characters to represent objects
+users could interact with objects using the mause while the simulation is running
+
+
+audit tool
+
+
+GAME alt
+-A fast paced, roguelike, 2d platformer shooter with a similar style and concepts to superfighters, my firend pedro, ultrakill, celeste or other games of that genre
+-retro sounding 8-bit style of music or a more futurey, synth style of sound design, like cyberpunk 
+-movement tech
+-fluidity
+-simplicity of the interface, the camera will exist as a square on a larger simulated area, the whole area will be simulated at the same time 
+but will allow player tracking and zoom functions for the player, the camera region will fit the size of the window and can be achieved by first 
+rendering the whole level and then drawing the camera borders on screen and hiding the rest from the user by zooming to the boarderless camera region
+-bullets and weapons should be simple sprites that have sufficient collision properties and can interract with weapons or other objects in the game for e.g. blocking/cover damage
+-NPC's should be able to accurately target the player and take cover, behind objects. NPC's should also use some of the same movement tech and gadgets as 
+the payer depending on their difficulty or enemy type, with characters throwing grenades, using shields to block, and hiding from the players current attack by dodging or blocking.
+-enemy types
+-cover
+-Environmental objects. The levl should have several interactable objects that the player (or NPCs) can utilise, like glass, falling objects, exploding barrels and doors
+-music should fit the current chaos of the onging battle, with it ramping up as combat intensifies while stil being a good fit for the current action 
+like doom, ultrakill or cuberpunk2077
+

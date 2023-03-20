@@ -1,0 +1,27 @@
+
+Music
+
+There ar eseveral ideas when it comes to ingame music:
+
+looped soundtrack:
+pros: easy to implement, fewer songs need to be developed, nothing fancy has to be done to the track to make it work
+cons: boring, song stays the same despite what is happening in game, less appealing unless the game is constantly fast paced and the gameplay will always fit the music
+
+Level triggers:
+pros: music fits the game better, ability to fine tune soundtrack to fit in with gameplay
+cons: Triggers have to be added to the level and greatly increase complexity of level design, syncing soundtrack will be difficult
+
+
+
+Top down zombie survival, wave defence game
+
+2D platformer shooter, endless
+
+
+Existing games
+
+Top down:
+Factorio wave defence
+
+2D platformer:
+Super Fighters 
