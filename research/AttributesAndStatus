@@ -1,0 +1,10 @@
+AttributesAndStatus
+
+Attribures
+Each character posessing some of the multiplier based effects (Melee damage, throw velocity, health regen), can have an attribute list tied to them based on different character stats and on any equipped weapons and active buffs. 
+This will be used by  multiplefunctions to update current multipliers when the attributes are changed.
+
+Status effects
+Each character will also have a list of status effects tied to their character that work as a higher level of displaying effects to the player (on fire, damage boost, weakness)
+These effects will be represented in game by an icon under the players health bar, or on their portrait along with any visual effects that go along with them e.g. on fire. 
+The status effect list will be in  a 2D array with the name of the effect and the duration, -1 for infinite. These are then used by game functions to apply that effect to that character for the remaining duration.
