@@ -11,7 +11,7 @@ using UnityEngine;
 \https://www.youtube.com/playlist?list=PLy78FINcVmjA0zDBhLuLNL1Jo6xNMMq-W (Video Series)
 */
 
-public enum PlayerState
+public enum PlayerState //Constants for player state
 {
     IDLE,
     WALKING,
@@ -20,17 +20,17 @@ public enum PlayerState
 
 public class Player_controller_V2 : MonoBehaviour
 {
-    public PlayerState PState = PlayerState.IDLE;
+    //Initialisation settings
+    public PlayerState PState = PlayerState.IDLE; //Set state to idle
 
     [Header("Settings")]
     public float fSpeed = 6.0f;
     public float fJumpStrength = 12.0f;
     public float fGroundRadius;
 
-    [Header("Diagnostics")]
+    [Header("Diagnostics")] //Using these to debug
     public bool bGrounded;
     public bool bFacingRight = true;
-    //public bool bStateChanged = false;
     public bool bCanJump;
     public bool bIsWalking;
 
@@ -49,21 +49,20 @@ public class Player_controller_V2 : MonoBehaviour
     }
 
     
+    //Runs each frame
     void Update()
     {
-       //bStateChanged = false;
-
+       //Check current inputs and player state so the state machine can work
        CheckInput();
        CheckMoveDirection();
        AnimationUpdate();
        CheckIfCanJump();
 
-       //Start of the state machine
+       //Start of the state machine, figures out and sets the players curent state and sets various values or calls functions depending on that state
        if (PState == PlayerState.IDLE)
        {
-            if (fMoveDirection != 0)
+            if (fMoveDirection != 0) //fMoveDirection use GetAxisRaw which returns either: -1(left), 0(no input) or 1(right)
             {
-                //bStateChanged = true;
                 PState = PlayerState.WALKING;
                 if (fMoveDirection > 0)
                 {
@@ -76,7 +75,6 @@ public class Player_controller_V2 : MonoBehaviour
             }
             else if (Input.GetButtonDown("Jump") && bCanJump)
             {
-                //bStateChanged = true;
                 PState = PlayerState.JUMPING;
                 Jump();
             }
@@ -85,13 +83,11 @@ public class Player_controller_V2 : MonoBehaviour
        {
             if (Input.GetButtonDown("Jump") && bCanJump)
             {
-                //bStateChanged = true;
                 PState = PlayerState.JUMPING;
                 Jump();
             }
             else if (fMoveDirection == 0)
             {
-                //bStateChanged = true;
                 PState = PlayerState.IDLE;
             }
        }
@@ -109,8 +105,10 @@ public class Player_controller_V2 : MonoBehaviour
                 }
             }
        }
+       //Using a state machine here so I can isolate the movement from the input somewhat
     }
 
+    //Called every tick of the physics engine ~50 ticks/second, better to add the movement functions here and have the input stuff in update so inputs aren't missed
     private void FixedUpdate()
     {
         ApplyMovement();
@@ -122,24 +120,27 @@ public class Player_controller_V2 : MonoBehaviour
         fMoveDirection = Input.GetAxisRaw("Horizontal");
     }
 
+    //Doesn't need to be in FixedUpdate as its only adding to the players vertical velocity, impulse rather than continuous like the right/left movement
     private void Jump()
     {
-        if (bCanJump)
+        if (bCanJump) //Probably unnecessary as it is already checked before this function is called anyway
         {
-            RB2D.velocity = new Vector2(RB2D.velocity.x, fJumpStrength);
+            RB2D.velocity = new Vector2(RB2D.velocity.x, fJumpStrength); //Takes an x and y velocity and sets the rigid body's velocity to that, velocity.x == current velocity of the rigidbody
         }
     }
 
     private void ApplyMovement()
     {
-        RB2D.velocity = new Vector2(fSpeed * fMoveDirection, RB2D.velocity.y);
+        RB2D.velocity = new Vector2(fSpeed * fMoveDirection, RB2D.velocity.y); //Same as above but acting on the x instead of the y
     }
 
+    //Creates a circle around the base of the player that sets the bGrounded bool when it overlaps with the ground
     private void CheckGrounded()
     {
         bGrounded = Physics2D.OverlapCircle(GroundCheck.position, fGroundRadius, IsGround);
     }
 
+    //Flips the player model depending on the movement direction
     private void Flip() 
     {
         bFacingRight = !bFacingRight;
@@ -181,11 +182,13 @@ public class Player_controller_V2 : MonoBehaviour
     }
 
 
+    //Used to set a boolean in the animation controller that changes to and from the walking animation
     private void AnimationUpdate()
     {
         Anim.SetBool("IsWalking", bIsWalking);
     }
 
+    //Draws a sphere over the grouncheck sphere for debug purposes
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(GroundCheck.position, fGroundRadius);
