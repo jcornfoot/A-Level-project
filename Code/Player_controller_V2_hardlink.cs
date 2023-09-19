@@ -58,6 +58,7 @@ public class Player_controller_V2 : MonoBehaviour
        AnimationUpdate();
        CheckIfCanJump();
 
+       //Start of the state machine
        if (PState == PlayerState.IDLE)
        {
             if (fMoveDirection != 0)
