@@ -1,0 +1,19 @@
+IDEAS
+====
+# Use an NPC brain to control movement. Adapt the Player controler to take input from the brain. Brain handles behaviour and sends input to the controller. Could use a sub-brin for movement/combat and a main brain for control
+# NPCs have the same behaviour as the player
+# Enemies can see everything at all times
+# NPC brain can be easilly updated and modified due to modularity
+
+# NPC brain works on a cycle; read last state, evaluate current situation based on the previous state (e.g. If previously attacking, don't become idle in the middle of a fight), act on evaluation (change state or keep previous), act on current state ( 
+
+# the brain will work on states (Move, crouch, attack/shoot, melee, etc.) the brain chooses a state based on the evaluation of its current situation, this state is given to another part of the brain that handles acting on this state. This other part of the brain is in charge of checking the-
+- current conditions (e.g. if the current weapon can shoot through crates or not) and then decides on what action to take. After a conclusion has been reached on what the npc should do, it tells other sub-systems what to do. 
+
+https://www.toptal.com/unity-unity3d/unity-ai-development-finite-state-machine-tutorial (lots of information on FSMs and FSMs for npcs)
+https://opsive.com/support/documentation/behavior-designer/behavior-trees-or-finite-state-machines/ (ideas for combining Behaviour trees and FSMs)
+https://www.gamedeveloper.com/programming/behavior-trees-for-ai-how-they-work (project zomboid game dev on Behavior trees)
+https://robohub.org/introduction-to-behavior-trees/ (another website with information about npc control)
+
+# Behavior trees, should store the current node and it's state, finished, running, failed.
+# Could use a behavior tree for one type of npc and the brain idea for another.
