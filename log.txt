@@ -1,0 +1,3 @@
+Added firepoint child to player
+Created bullet prefab
+Need to update to point to player

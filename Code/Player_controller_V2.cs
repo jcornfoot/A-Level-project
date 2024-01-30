@@ -22,7 +22,6 @@ public class Player_controller_V2 : MonoBehaviour
 {
     //Initialisation settings
     public PlayerState PState = PlayerState.IDLE; //Set state to idle
-
     [Header("Settings")]
     public float fSpeed = 6.0f;
     public float fJumpStrength = 12.0f;
@@ -144,7 +143,7 @@ public class Player_controller_V2 : MonoBehaviour
     private void Flip() 
     {
         bFacingRight = !bFacingRight;
-        transform.Rotate(0.0f, 180.0f, 0.0f);
+        transform.Rotate(0f, 180f, 0f);
     }
 
     private void CheckMoveDirection()
