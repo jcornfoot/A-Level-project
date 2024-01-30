@@ -1,3 +1,6 @@
 Added firepoint child to player
 Created bullet prefab
-Need to update to point to player
+Flip() handles rotating firepoint to correct orientation
+Made bullets damage stuff they hit
+- Make a damage script that takes the value and type of damage?
+Made menu scripts
