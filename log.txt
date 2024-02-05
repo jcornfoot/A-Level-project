@@ -4,3 +4,6 @@ Flip() handles rotating firepoint to correct orientation
 Made bullets damage stuff they hit
 - Make a damage script that takes the value and type of damage?
 Made menu scripts
+
+Added gun placeholder as child of firepoint
+Made firepoint rotate to point at mouse
