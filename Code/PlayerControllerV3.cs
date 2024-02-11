@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -12,16 +14,19 @@ REFERENCES:
 */
 
 
+
 public class PlayerControllerV3 : MonoBehaviour
 {
     [Header("State")]
+    public bool walking;
+    public bool aiming;
     public bool lookingRight = true;
 
     public bool grounded;
     public bool canMove;
     public bool canJump;
     public bool canAim;
-    public bool aiming;
+    
     public float moveDirection;
     [Header("Config")]
     public float speed = 6.0f;
@@ -47,12 +52,12 @@ public class PlayerControllerV3 : MonoBehaviour
     {
         SetState();
         if (canMove) {
-            Move();
+            MoveControl();
             JumpControl();
         }
         AimControl();
         
-        //UpdateAnimation();
+        UpdateAnimation();
     }
 
     private void SetState() {
@@ -86,11 +91,45 @@ public class PlayerControllerV3 : MonoBehaviour
         else canMove = true;
     }
 
+
+/* Transitions */
+    private void MoveControl() {
+        moveDirection = Input.GetAxisRaw("Horizontal");
+        if (moveDirection != 0) walking = true;
+        else walking = false;
+        Move();
+    }
+    private void JumpControl() {
+        if (Input.GetButtonDown("Jump") && canJump) {
+            Jump();
+        }
+    }
+    private void AimControl() {
+        if (Input.GetButton("Fire2") && canAim) {
+            RB2D.velocity = new Vector2(0f, 0f);
+            //BUG: If first frame is in air, player slides when they contact the ground
+
+            aiming = true;
+            Aim();
+        }
+        else if (Input.GetButtonUp("Fire2")) {
+            WeaponPoint.SetActive(false);
+            aiming = false;
+        }
+        else if (Input.GetButtonDown("Fire2") && !grounded) StartCoroutine(StopAim());
+    }
+
+    private IEnumerator StopAim() {
+        while (!grounded) {
+            yield return null;
+        }
+        RB2D.velocity = new Vector2(0f, 0f);
+    }
+
+
 /* States */
     private void Move() {
-        moveDirection = Input.GetAxisRaw("Horizontal");
         UpdateOrientation();
-
         RB2D.velocity = new Vector2(speed * moveDirection, RB2D.velocity.y);
     }
 
@@ -102,23 +141,6 @@ public class PlayerControllerV3 : MonoBehaviour
         WeaponPoint.SetActive(true);
     }
 
-/* Transitions */
-    private void JumpControl() {
-        if (Input.GetButtonDown("Jump") && canJump) Jump();
-    }
-    private void AimControl() {
-        if (Input.GetButton("Fire2") && canAim) {
-            if (Input.GetButtonDown("Fire2")) RB2D.velocity = new Vector2(0f, 0f); /* sets current x and y velocity to zero on first frame Fire2 is pressed, if not the player will slide when entering aiming while moving */
-            //BUG: If first frame is in air, player slides when they contact the ground
-
-            aiming = true;
-            Aim();
-        }
-        else if (Input.GetButtonUp("Fire2")) { /* Disables the weapon point and it's children on first frame Fire2 is released */
-            WeaponPoint.SetActive(false);
-            aiming = false;
-        }
-    }
 
 /* Appearance */
 
@@ -129,11 +151,14 @@ public class PlayerControllerV3 : MonoBehaviour
         else if (!lookingRight && moveDirection > 0) {
             Flip();
         }
-
     }
-    /*private void UpdateAnimation() {
-        Anim.SetBool("IsWalking", isW)
-    }*/
+    private void UpdateAnimation() {
+        //jumping is a trigger
+        //aiming is a bool
+        //Idle is default
+
+        Anim.SetBool("IsWalking", walking);
+    }
 
     private void Flip() {
         lookingRight = !lookingRight;
