@@ -5,16 +5,18 @@ using UnityEngine;
 public class Shoot_V2 : MonoBehaviour
 {
     public float fireRate = 0.5f; /* Time in seconds between shots */
-    private float time;
+    public float time;
     public GameObject bulletPrefab;
 
     void Update()
     {
-        time -= Time.deltaTime;
+        while (time > 0) {
+            time -= Time.deltaTime;
+            return;
+        }
         if (Input.GetButton("Fire1") && time<=0) {
             Fire();
             time = fireRate;
-
         }
     }
 
