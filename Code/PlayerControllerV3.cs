@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.BuiltIn.ShaderGraph;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
@@ -14,22 +15,28 @@ REFERENCES:
 */
 
 
-
 public class PlayerControllerV3 : MonoBehaviour
 {
     [Header("State")]
+    public bool sprintTimer;
     public bool walking;
     public bool aiming;
+    public bool sprinting;
     public bool lookingRight = true;
-
     public bool grounded;
     public bool canMove;
     public bool canJump;
     public bool canAim;
+    public bool canSprint;
     
     public float moveDirection;
+    public float sprintDelay = 0.5f;
+    public float sprintTime;
+    public int tapAmount;
+
     [Header("Config")]
-    public float speed = 6.0f;
+    public float walkSpeed = 6.0f;
+    public float sprintSpeed = 9.0f;
     public float jumpForce = 12.0f;
     public float groundRadius = 0.20f;
     [Header("Attachments")]
@@ -44,6 +51,8 @@ public class PlayerControllerV3 : MonoBehaviour
     
     void Start()
     {
+        UnityEngine.Rendering.DebugManager.instance.enableRuntimeUI = false; /* Disables the debug canvas, preventing a freeze */
+        Time.timeScale = 0.5f;
         RB2D = gameObject.GetComponent<Rigidbody2D>();
         Anim = gameObject.GetComponent<Animator>();
     }
@@ -53,7 +62,6 @@ public class PlayerControllerV3 : MonoBehaviour
         SetState();
         if (canMove) {
             MoveControl();
-            JumpControl();
         }
         AimControl();
         
@@ -64,15 +72,14 @@ public class PlayerControllerV3 : MonoBehaviour
         CheckGrounded();
         CheckAimable();
         CheckMovable();
+        CheckSprintable();
         
-        if (grounded && !aiming) {
+        if (grounded && !sprinting) {
             canJump = true;
         }
         else {
             canJump = false;
         }
-
-        
     }
 
 
@@ -82,55 +89,71 @@ public class PlayerControllerV3 : MonoBehaviour
     }
 
     private void CheckAimable() {
-        if (grounded) canAim = true;
+        if (grounded && !sprinting) canAim = true;
         else canAim = false;
     }
 
     private void CheckMovable() {
-        if (aiming) canMove = false;
-        else canMove = true;
+        canMove = true;
+    }
+
+    private void CheckSprintable() {
+        if (grounded && walking) canSprint = true;
+        else canSprint = false;
     }
 
 
 /* Transitions */
     private void MoveControl() {
         moveDirection = Input.GetAxisRaw("Horizontal");
-        if (moveDirection != 0) walking = true;
-        else walking = false;
+        if (canSprint && !sprinting && !sprintTimer) {
+            sprintTimer = true;
+            sprintTime = sprintDelay;
+            StartCoroutine(Sprint(moveDirection));
+        }
+
+
+        if (Input.GetKeyDown("space")&& canJump) Jump();
+        if (moveDirection != 0) {
+            walking = true;
+        }
+        else {
+            walking = false;
+            sprinting = false;
+            sprintTimer = false;
+        }
         Move();
     }
-    private void JumpControl() {
-        if (Input.GetButtonDown("Jump") && canJump) {
-            Jump();
+
+    private IEnumerator Sprint(float direction) {
+        while (sprintTime > 0) {
+            if ((Input.GetKeyDown("a") || Input.GetKeyDown("d")) && (direction == moveDirection)) {
+            sprinting = true;
+            sprintTimer = false;
+            yield break;
+            }
+            sprintTime -= Time.deltaTime;
+            yield return null;
         }
+        sprinting = false;
     }
     private void AimControl() {
         if (Input.GetButton("Fire2") && canAim) {
-            RB2D.velocity = new Vector2(0f, 0f);
-            //BUG: If first frame is in air, player slides when they contact the ground
-
             aiming = true;
             Aim();
         }
-        else if (Input.GetButtonUp("Fire2")) {
+        else if (Input.GetButtonUp("Fire2") || !canAim && aiming) {
             WeaponPoint.SetActive(false);
             aiming = false;
         }
-        else if (Input.GetButtonDown("Fire2") && !grounded) StartCoroutine(StopAim());
-    }
-
-    private IEnumerator StopAim() {
-        while (!grounded) {
-            yield return null;
-        }
-        RB2D.velocity = new Vector2(0f, 0f);
     }
 
 
 /* States */
     private void Move() {
         UpdateOrientation();
-        RB2D.velocity = new Vector2(speed * moveDirection, RB2D.velocity.y);
+        if (sprinting) RB2D.velocity = new Vector2(sprintSpeed * moveDirection, RB2D.velocity.y);
+        else RB2D.velocity = new Vector2(walkSpeed * moveDirection, RB2D.velocity.y);
     }
 
     private void Jump() {
