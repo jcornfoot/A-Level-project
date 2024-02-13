@@ -30,7 +30,7 @@ public class PlayerControllerV3 : MonoBehaviour
     public bool canSprint;
     
     public float moveDirection;
-    public float sprintDelay = 0.5f;
+    public float sprintDelay = 0.2f;
     public float sprintTime;
     public int tapAmount;
 
@@ -74,7 +74,7 @@ public class PlayerControllerV3 : MonoBehaviour
         CheckMovable();
         CheckSprintable();
         
-        if (grounded && !sprinting) {
+        if (grounded) {
             canJump = true;
         }
         else {
@@ -89,7 +89,7 @@ public class PlayerControllerV3 : MonoBehaviour
     }
 
     private void CheckAimable() {
-        if (grounded && !sprinting) canAim = true;
+        if (grounded) canAim = true;
         else canAim = false;
     }
 
@@ -98,7 +98,7 @@ public class PlayerControllerV3 : MonoBehaviour
     }
 
     private void CheckSprintable() {
-        if (grounded && walking) canSprint = true;
+        if (grounded && walking && !aiming) canSprint = true;
         else canSprint = false;
     }
 
