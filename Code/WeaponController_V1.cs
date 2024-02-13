@@ -7,7 +7,7 @@ public class WeaponController_V1 : MonoBehaviour
     private Camera mainCamera;
     private Vector3 mousePosition;
 
-    public float fireRate = 0.5f;
+    public float fireRate = 2f;
     public float time;
     public GameObject bulletPrefab;
     private Transform firePoint;
@@ -16,31 +16,30 @@ public class WeaponController_V1 : MonoBehaviour
     {
       mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
       firePoint = gameObject.transform.Find("FirePoint");  
+      fireRate = 1/fireRate;
     }
 
     void Update()
     {
-       mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); 
-       //Vector to mouse position in world
+        /* Rotation */
 
-       Vector3 rotation = mousePosition - transform.position;
-       //Subtracts the vector to the firepoint position from the vector to the mouse postion
+        mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); /* Vector to mouse position in world */
+        Vector3 rotation = mousePosition - transform.position; /* Subtracts the vector to the firepoint position from the vector to the mouse postion */
+        float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg; /* Works out the angle to point the firepoint to */
 
-       float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-       //Works out the angle to point the firepoint to
+        transform.rotation = Quaternion.Euler(0, 0, rotZ); /* Points the firepoint to the correct angle */
+       
+       /* Firing */
 
-       transform.rotation = Quaternion.Euler(0, 0, rotZ);
-       //Points the firepoint to the correct angle
+        while(time > 0) {
+            time -= Time.deltaTime;
+            return;
+        }
 
-       while(time > 0) {
-        time -= Time.deltaTime;
-        return;
-       }
-
-       if (Input.GetButton("Fire1") && time <= 0) {
-        Fire();
-        time = fireRate;
-       }
+        if (Input.GetButton("Fire1") && time <= 0) {
+            Fire();
+            time = fireRate;
+        }
     }
 
     void Fire() {
