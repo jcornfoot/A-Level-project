@@ -51,18 +51,17 @@ public class PlayerControllerV3 : MonoBehaviour
     [Header("Attachments")]
     public Transform groundCheck;
     public LayerMask ground;
-    public GameObject WeaponPoint;
-
-
-
+    public GameObject wManager;
     private Rigidbody2D RB2D;
     private Animator Anim;
+    public WeaponManager weaponManager;
     
     void Start()
     {
         UnityEngine.Rendering.DebugManager.instance.enableRuntimeUI = false; /* Disables the debug canvas, preventing a freeze */
         RB2D = gameObject.GetComponent<Rigidbody2D>();
         Anim = gameObject.GetComponent<Animator>();
+        weaponManager = wManager.GetComponent<WeaponManager>();
     }
 
     void Update()
@@ -180,7 +179,7 @@ public class PlayerControllerV3 : MonoBehaviour
             Aim();
         }
         else if (Input.GetButtonUp("Fire2") || !canAim && aiming) {
-            WeaponPoint.SetActive(false);
+            weaponManager.currentWeapon.SetActive(false);
             aiming = false;
         }
     }
@@ -198,7 +197,7 @@ public class PlayerControllerV3 : MonoBehaviour
     }
 
     private void Aim() {
-        WeaponPoint.SetActive(true);
+        weaponManager.currentWeapon.SetActive(true);
     }
 
 
