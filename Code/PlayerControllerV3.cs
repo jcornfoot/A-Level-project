@@ -52,7 +52,6 @@ public class PlayerControllerV3 : MonoBehaviour
     void Start()
     {
         UnityEngine.Rendering.DebugManager.instance.enableRuntimeUI = false; /* Disables the debug canvas, preventing a freeze */
-        Time.timeScale = 0.5f;
         RB2D = gameObject.GetComponent<Rigidbody2D>();
         Anim = gameObject.GetComponent<Animator>();
     }
@@ -60,6 +59,7 @@ public class PlayerControllerV3 : MonoBehaviour
     void Update()
     {
         SetState();
+        AirControl();
         if (canMove) {
             MoveControl();
         }
@@ -89,7 +89,7 @@ public class PlayerControllerV3 : MonoBehaviour
     }
 
     private void CheckAimable() {
-        if (grounded) canAim = true;
+        if (grounded && !sprinting) canAim = true;
         else canAim = false;
     }
 
@@ -104,6 +104,15 @@ public class PlayerControllerV3 : MonoBehaviour
 
 
 /* Transitions */
+
+    private void AirControl() {
+        if (Input.GetKeyDown("space")&& canJump) Jump();
+        if (Input.GetKeyUp("space") && RB2D.velocity.y > 0) {
+            RB2D.velocity = new Vector2(RB2D.velocity.x, (RB2D.velocity.y/2));
+        }
+        if (RB2D.velocity.y < 0) RB2D.gravityScale = 2.5f;
+        else RB2D.gravityScale = 2;
+    }
     private void MoveControl() {
         moveDirection = Input.GetAxisRaw("Horizontal");
         if (canSprint && !sprinting && !sprintTimer) {
@@ -111,9 +120,6 @@ public class PlayerControllerV3 : MonoBehaviour
             sprintTime = sprintDelay;
             StartCoroutine(Sprint(moveDirection));
         }
-
-
-        if (Input.GetKeyDown("space")&& canJump) Jump();
         if (moveDirection != 0) {
             walking = true;
         }
@@ -142,7 +148,7 @@ public class PlayerControllerV3 : MonoBehaviour
             aiming = true;
             Aim();
         }
-        else if (Input.GetButtonUp("Fire2") || !canAim && aiming) {
+        else if (Input.GetButtonUp("Fire2") || (!canAim && aiming)) {
             WeaponPoint.SetActive(false);
             aiming = false;
         }
