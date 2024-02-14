@@ -11,7 +11,6 @@ public class WeaponController_V1 : MonoBehaviour
     public float time;
     public GameObject bulletPrefab;
     private Transform firePoint;
-
     void Start()
     {
       mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
