@@ -14,6 +14,12 @@ REFERENCES:
 - https://github.com/DanielDFY/Hollow-Knight-Imitation/blob/master/Hollow%20Knight/Assets/Scripts/Player/PlayerController.cs
 */
 
+/* 
+BUGS:
+- Spamming jump causes a double jump due to coyote time and ground detect circle reporting grounded while in air 
+    - If shrunk or removed, need to implement jump buffering to replace functionality
+*/
+
 
 public class PlayerControllerV3 : MonoBehaviour
 {
@@ -28,6 +34,9 @@ public class PlayerControllerV3 : MonoBehaviour
     public bool canJump;
     public bool canAim;
     public bool canSprint;
+    public bool coyoteTime;
+    public float coyoteTimer;
+    public float airTimer;
     
     public float moveDirection;
     public float sprintDelay = 0.2f;
@@ -73,13 +82,8 @@ public class PlayerControllerV3 : MonoBehaviour
         CheckAimable();
         CheckMovable();
         CheckSprintable();
-        
-        if (grounded) {
-            canJump = true;
-        }
-        else {
-            canJump = false;
-        }
+        CheckJumpable();
+        CheckCoyoteTime();
     }
 
 
@@ -102,13 +106,40 @@ public class PlayerControllerV3 : MonoBehaviour
         else canSprint = false;
     }
 
+    private void CheckJumpable() {
+        if (grounded || coyoteTime) {
+            canJump = true;
+        }
+        else {
+            canJump = false;
+        }
+    }
+
+    private void CheckCoyoteTime() {
+        /* reference: https://www.youtube.com/watch?v=RFix_Kg2Di0 */
+        if (grounded) {
+            airTimer = 0;
+        }
+        else {
+            airTimer += Time.deltaTime;
+        }
+        if (!grounded && airTimer < coyoteTimer) {
+            coyoteTime = true;
+        }
+        else {
+            coyoteTime = false;
+        }
+    }
+
 
 /* Transitions */
 
     private void AirControl() {
-        if (Input.GetKeyDown("space")&& canJump) Jump();
+        if (Input.GetKeyDown("space")&& canJump) {
+            Jump();
+        }
         if (Input.GetKeyUp("space") && RB2D.velocity.y > 0) {
-            RB2D.velocity = new Vector2(RB2D.velocity.x, (RB2D.velocity.y/2));
+            RB2D.velocity = new Vector2(RB2D.velocity.x, RB2D.velocity.y * 0.5f);
         }
         if (RB2D.velocity.y < 0) RB2D.gravityScale = 2.5f;
         else RB2D.gravityScale = 2;
@@ -148,7 +179,7 @@ public class PlayerControllerV3 : MonoBehaviour
             aiming = true;
             Aim();
         }
-        else if (Input.GetButtonUp("Fire2") || (!canAim && aiming)) {
+        else if (Input.GetButtonUp("Fire2") || !canAim && aiming) {
             WeaponPoint.SetActive(false);
             aiming = false;
         }
