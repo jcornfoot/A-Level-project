@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
 {
     [Header("Config")]
     public float ProjectileSpeed = 20f;
-    public int ProjectileDamage = 20;
+    public float ProjectileDamage = 20;
     public Rigidbody2D rb;
     void Start()
     {
@@ -17,9 +17,9 @@ public class Bullet : MonoBehaviour
     }
 
     void OnTriggerEnter2D (Collider2D Hit) {
-        EnemyTest enemy=Hit.GetComponent<EnemyTest>();
+        Health enemy=Hit.GetComponent<Health>();
         if (enemy != null) {
-            enemy.Damaged(ProjectileDamage);
+            enemy.Hurt(ProjectileDamage);
         }
         Destroy(gameObject);   
     }
