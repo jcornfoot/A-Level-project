@@ -9,9 +9,9 @@ Reference:
 
 public class WeaponManager : MonoBehaviour
 {
-    public int weaponCount;
+    [SerializeField] private int weaponCount;
     public int currentSlot;
-    [HideInInspector] public GameObject[] weapons;
+    private GameObject[] weapons;
     public GameObject currentWeapon;
 
 

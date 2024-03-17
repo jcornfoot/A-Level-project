@@ -8,9 +8,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [Header("Config")]
-    public float ProjectileSpeed = 20f;
-    public float ProjectileDamage = 20;
-    public Rigidbody2D rb;
+    [SerializeField] private float ProjectileSpeed = 20f;
+    [SerializeField] private float ProjectileDamage = 20;
+    [SerializeField] private Rigidbody2D rb;
     void Start()
     {
         rb.velocity = transform.right * ProjectileSpeed;

@@ -8,9 +8,9 @@ using UnityEngine.SceneManagement;
 /*https://www.sharpcoderblog.com/blog/unity-3d-create-main-menu-with-ui-canvas*/
 public class MenuButtons : MonoBehaviour
 {
-    public GameObject MainMenu;
-    public GameObject OptionsMenu;
-    public GameObject ExitMenu;
+    [SerializeField] private GameObject MainMenu;
+    [SerializeField] private GameObject OptionsMenu;
+    [SerializeField] private GameObject ExitMenu;
 
     public void ButtonPlay () {
         SceneManager.LoadScene(1);

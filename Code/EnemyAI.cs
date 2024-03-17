@@ -11,17 +11,17 @@ https://www.youtube.com/watch?v=sWqRfygpl4I
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform target;
+    [SerializeField] private Transform target;
 
-    public float moveSpeed = 10f;
-    public float jumpStrength = 3f;
-    public float nextWaypointDist = 3f;
-    public float jumpRequirement = 0.5f;
-    public float moveDirection;
-    public float groundRadius = 0.3f;
-    public bool grounded;
-    public Transform groundCheck;
-    public LayerMask ground;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float jumpStrength = 3f;
+    [SerializeField] private float nextWaypointDist = 3f;
+    [SerializeField] private float jumpRequirement = 0.5f;
+    [SerializeField] private float moveDirection;
+    [SerializeField] private float groundRadius = 0.3f;
+    [SerializeField] private bool grounded;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask ground;
     Path path;
     int currentWaypoint = 0;
     bool endOfPath = false;

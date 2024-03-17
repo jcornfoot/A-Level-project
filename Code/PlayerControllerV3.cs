@@ -24,37 +24,37 @@ BUGS:
 public class PlayerControllerV3 : MonoBehaviour
 {
     [Header("State")]
-    public bool sprintTimer;
-    public bool walking;
-    public bool aiming;
-    public bool sprinting;
-    public bool lookingRight = true;
-    public bool grounded;
-    public bool canMove;
-    public bool canJump;
-    public bool canAim;
-    public bool canSprint;
-    public bool coyoteTime;
-    public float coyoteTimer;
-    public float airTimer;
+    private bool sprintTimer;
+    [SerializeField] private bool walking;
+    [SerializeField] private bool aiming;
+    [SerializeField] private bool sprinting;
+    [SerializeField] private bool lookingRight = true;
+    [SerializeField] private bool grounded;
+    [SerializeField] private bool canMove;
+    [SerializeField] private bool canJump;
+    [SerializeField] private bool canAim;
+    [SerializeField] private bool canSprint;
+    [SerializeField] private bool coyoteTime;
+    [SerializeField] private float coyoteTimer;
+    [SerializeField] private float airTimer;
     
-    public float moveDirection;
-    public float sprintDelay = 0.2f;
-    public float sprintTime;
-    public int tapAmount;
+    [SerializeField] private float moveDirection;
+    [SerializeField] private float sprintDelay = 0.2f;
+    [SerializeField] private float sprintTime;
+    [SerializeField] private int tapAmount;
 
     [Header("Config")]
-    public float walkSpeed = 6.0f;
-    public float sprintSpeed = 9.0f;
-    public float jumpForce = 12.0f;
-    public float groundRadius = 0.20f;
+    [SerializeField] private float walkSpeed = 6.0f;
+    [SerializeField] private float sprintSpeed = 9.0f;
+    [SerializeField] private float jumpForce = 12.0f;
+    [SerializeField] private float groundRadius = 0.20f;
     [Header("Attachments")]
-    public Transform groundCheck;
-    public LayerMask ground;
-    public GameObject wManager;
-    private Rigidbody2D RB2D;
-    private Animator Anim;
-    public WeaponManager weaponManager;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask ground;
+    [SerializeField] private GameObject wManager;
+    [SerializeField] private Rigidbody2D RB2D;
+    [SerializeField] private Animator Anim;
+    [SerializeField] private WeaponManager weaponManager;
     
     void Start()
     {
