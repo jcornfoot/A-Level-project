@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using Pathfinding;
+using System;
 
 /* Reference: 
 https://www.youtube.com/watch?v=jvtFUfJ6CP8
@@ -11,23 +12,34 @@ https://www.youtube.com/watch?v=sWqRfygpl4I
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private Transform target;
-
+    
+    [Header("settings")]
+    
+    [SerializeField] private float attackDamage = 10f;
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpStrength = 3f;
     [SerializeField] private float nextWaypointDist = 3f;
     [SerializeField] private float jumpRequirement = 0.5f;
-    [SerializeField] private float moveDirection;
     [SerializeField] private float groundRadius = 0.3f;
+
+    
+    [Header("info")]
+
+    [SerializeField] private float moveDirection;
     [SerializeField] private bool grounded;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask ground;
-    Path path;
     int currentWaypoint = 0;
     bool endOfPath = false;
 
+
+    [Header("Attachments")]
+
+    [SerializeField] private Transform target;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask ground;
+    Path path;
     Seeker seeker;
     Rigidbody2D rb2D;
+    Health enemy;
 
     void Start()
     {
@@ -88,5 +100,12 @@ public class EnemyAI : MonoBehaviour
     }
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
+    }
+
+    void OnTriggerEnter2D (Collider2D Hit) {
+        enemy = Hit.GetComponent<Health>();
+        if (enemy != null) {
+            enemy.Hurt(attackDamage, 1);
+        } 
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -19,7 +20,7 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D (Collider2D Hit) {
         Health enemy=Hit.GetComponent<Health>();
         if (enemy != null) {
-            enemy.Hurt(ProjectileDamage);
+            enemy.Hurt(ProjectileDamage, 0);
         }
         Destroy(gameObject);   
     }
