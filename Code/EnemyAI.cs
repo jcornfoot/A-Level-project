@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
 {
     
     [Header("settings")]
+    [SerializeField] private float activateDistance = 10f;
     
     [SerializeField] private float attackDamage = 10f;
     [SerializeField] private float moveSpeed = 10f;
@@ -27,6 +28,7 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private float moveDirection;
     [SerializeField] private bool grounded;
+    [SerializeField] private bool following = true;
     int currentWaypoint = 0;
     bool endOfPath = false;
 
@@ -69,6 +71,16 @@ public class EnemyAI : MonoBehaviour
     void FixedUpdate()
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, ground);
+        if (following && TargetInRange()) {
+            FollowPath();
+        }
+        if (!TargetInRange() && rb2D.velocity.x != 0) {
+            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+        }
+        
+    }
+
+    private void FollowPath() {
         if (path == null)
         {
             return;
@@ -100,6 +112,10 @@ public class EnemyAI : MonoBehaviour
     }
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
+    }
+
+    bool TargetInRange() {
+        return Vector2.Distance(transform.position, target.transform.position) < activateDistance;
     }
 
     void OnTriggerEnter2D (Collider2D Hit) {
