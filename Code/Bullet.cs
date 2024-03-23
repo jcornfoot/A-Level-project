@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
+using UnityEditor.UI;
 using UnityEngine;
 /*Source:*/
 /*https://www.youtube.com/watch?v=wkKsl1Mfp5M*/
@@ -18,10 +19,15 @@ public class Bullet : MonoBehaviour
     }
 
     void OnTriggerEnter2D (Collider2D Hit) {
+        if (Hit.gameObject.name == "Light_ON") {
+            Lights lights=Hit.GetComponent<Lights>();
+            lights.Break();
+        }
         Health enemy=Hit.GetComponent<Health>();
         if (enemy != null) {
             enemy.Hurt(ProjectileDamage, 0);
         }
+        
         Destroy(gameObject);   
     }
     
