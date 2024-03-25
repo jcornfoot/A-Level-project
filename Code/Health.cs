@@ -8,13 +8,16 @@ public class Health : MonoBehaviour
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private float hitPoints;
     [SerializeField] private GameObject bar;
+    [SerializeField] private GameObject manager;
     [SerializeField] private HealthBar healthBar;
+    [SerializeField] private GameManager gM;
     [SerializeField] private bool player;
 
     void Start() {
         healthBar = bar.GetComponent<HealthBar>();
         hitPoints = maxHealth;
         healthBar.UpdateHealthBar(hitPoints, maxHealth);
+        gM = manager.GetComponent<GameManager>();
     }
 
     public void Hurt(float damage, int type) {
@@ -29,6 +32,7 @@ public class Health : MonoBehaviour
     }
 
     private void Die() {
+        if (player) gM.GameOver();
         Destroy(gameObject);
     }
 }

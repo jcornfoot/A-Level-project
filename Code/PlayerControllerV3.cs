@@ -228,4 +228,8 @@ public class PlayerControllerV3 : MonoBehaviour
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
     }
+
+    void OnDisable() {
+        Time.timeScale = 0;
+    }
 }
