@@ -4,6 +4,7 @@ using System.Diagnostics;
 using UnityEngine;
 using Pathfinding;
 using System;
+using UnityEngineInternal;
 
 /* Reference: 
 https://www.youtube.com/watch?v=jvtFUfJ6CP8
@@ -26,7 +27,7 @@ public class EnemyAI : MonoBehaviour
     
     [Header("info")]
 
-    [SerializeField] private float moveDirection;
+    [SerializeField] private bool facingRight = true;
     [SerializeField] private bool grounded;
     [SerializeField] private bool following = true;
     int currentWaypoint = 0;
@@ -38,6 +39,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask ground;
+    [SerializeField] private Animator anim;
     Path path;
     Seeker seeker;
     Rigidbody2D rb2D;
@@ -47,6 +49,7 @@ public class EnemyAI : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         rb2D = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
@@ -72,12 +75,22 @@ public class EnemyAI : MonoBehaviour
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, ground);
         if (following && TargetInRange()) {
+            anim.SetBool("IsWalking", true);
             FollowPath();
         }
         if (!TargetInRange() && rb2D.velocity.x != 0) {
+            anim.SetBool("IsWalking", false);
             rb2D.velocity = new Vector2(0, rb2D.velocity.y);
         }
-        
+        if (rb2D.velocity.x > 0 && !facingRight) {
+            facingRight = true;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        else if (rb2D.velocity.x < 0 && facingRight) {
+            facingRight = false;
+            transform.Rotate(0f, 180f, 0f);
+        }
+
     }
 
     private void FollowPath() {
