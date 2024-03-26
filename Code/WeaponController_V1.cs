@@ -23,17 +23,19 @@ public class WeaponController_V1 : MonoBehaviour
     private Camera mainCamera;
     private Vector3 mousePosition;
    
-    private Transform firePoint;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform firePoint2;
     
     private float time;
     private float cooldownTime;
+    private bool dualWield;
     
     void Start()
     {
       mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-      firePoint = gameObject.transform.Find("FirePoint");  
+       
       fireRate = 1/fireRate;
-      
+      if (firePoint2 != null) dualWield = true;
     }
 
     void OnEnable() {
@@ -88,5 +90,6 @@ public class WeaponController_V1 : MonoBehaviour
 
     void Fire() {
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        if (dualWield) Instantiate(bulletPrefab, firePoint2.position, firePoint2.rotation);
     }
 }
