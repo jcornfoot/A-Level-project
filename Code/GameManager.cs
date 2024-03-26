@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void Menu() {
         SceneManager.LoadScene("Menu");
+        Time.timeScale = 1;
     }
 
     public void Quit() {
